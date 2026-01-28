@@ -47,3 +47,10 @@ export const Switcher = styled.span`
     color: dodgerblue;
   }
 `;
+
+export const Switcher2 = styled.span`
+  margin-top: 20px;
+  a {
+    color: dodgerblue;
+  }
+`;

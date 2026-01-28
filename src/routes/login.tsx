@@ -10,7 +10,9 @@ import {
   Form,
   Title,
   Wrapper,
+  Switcher2,
 } from "../components/auth-components";
+import GitHubButton from "../components/github-btn";
 
 export default function CreateAccount() {
   const navigate = useNavigate();
@@ -75,6 +77,10 @@ export default function CreateAccount() {
         Don't have an account?{" "}
         <Link to="/create-account">Create one &rarr;</Link>
       </Switcher>
+      <Switcher2>
+        Forgot Password? <Link to="/find">Find Password &rarr;</Link>
+      </Switcher2>
+      <GitHubButton />
     </Wrapper>
   );
 }
