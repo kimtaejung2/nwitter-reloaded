@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import type { ITweet } from "./timeline";
 import { auth, db, storage } from "../firebase";
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 
 const Wrapper = styled.div`
@@ -42,6 +42,19 @@ const DeleteBtn = styled.button`
   cursor: pointer;
 `;
 
+const EditBtn = styled.button`
+  background-color: snow;
+  color: black;
+  margin-left: 5px;
+  font-weight: 600;
+  border: 0;
+  font-size: 12px;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+
 export default function Tweet({ username, tweet, photo, uid, id }: ITweet) {
   const user = auth.currentUser;
   const onDelete = async () => {
@@ -57,6 +70,22 @@ export default function Tweet({ username, tweet, photo, uid, id }: ITweet) {
       console.log(e);
     }
   };
+
+  const onEdit = async () => {
+    const editTweet = prompt("Edit Tweet: ");
+    if (user?.uid !== uid) return;
+    if (!editTweet) {
+      alert("Write edit tweet");
+      return;
+    }
+    try {
+      await updateDoc(doc(db, "tweets", id), {
+        tweet: editTweet,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Wrapper>
       <Column>
@@ -65,6 +94,7 @@ export default function Tweet({ username, tweet, photo, uid, id }: ITweet) {
         {user?.uid === uid ? (
           <DeleteBtn onClick={onDelete}>Delete</DeleteBtn>
         ) : null}
+        {user?.uid === uid ? <EditBtn onClick={onEdit}>Edit</EditBtn> : null}
       </Column>
       <Column>{photo ? <Photo src={photo} /> : null}</Column>
     </Wrapper>
