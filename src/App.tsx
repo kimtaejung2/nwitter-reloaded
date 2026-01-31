@@ -52,6 +52,9 @@ body{
   color:white;
   font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+::-webkit-scrollbar {
+display:none;
+}
 `;
 
 const Wrapper = styled.div`
@@ -62,12 +65,16 @@ const Wrapper = styled.div`
 
 function App() {
   const [isLoading, setLoading] = useState(true);
-  const init = async () => {
-    await auth.authStateReady();
-    setLoading(false);
-  };
   useEffect(() => {
-    init();
+    (async () => {
+      try {
+        await auth.authStateReady();
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, []);
   return (
     <Wrapper>
