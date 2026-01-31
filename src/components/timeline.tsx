@@ -24,6 +24,7 @@ const Wrapper = styled.div`
   display: flex;
   gap: 10px;
   flex-direction: column;
+  overflow-y: scroll;
 `;
 
 export default function Timeline() {
@@ -37,18 +38,18 @@ export default function Timeline() {
         orderBy("createdAt", "desc"),
         limit(25),
       );
-      // const snapshot = await getDocs(tweetsQuery);
-      // const tweets = snapshot.docs.map((doc) => {
-      //   const { createdAt, photo, tweet, uid, username } = doc.data();
-      //   return {
-      //     createdAt,
-      //     photo,
-      //     tweet,
-      //     uid,
-      //     username,
-      //     id: doc.id,
-      //   };
-      // });
+      /*       const snapshot = await getDocs(tweetsQuery);
+      const tweets = snapshot.docs.map((doc) => {
+        const { createdAt, photo, tweet, uid, username } = doc.data();
+        return {
+          createdAt,
+          photo,
+          tweet,
+          uid,
+          username,
+          id: doc.id,
+        };
+      }); */
       unsubscribe = onSnapshot(tweetsQuery, (snapshot) => {
         const tweets = snapshot.docs.map((doc) => {
           const { createdAt, photo, tweet, uid, username } = doc.data();
