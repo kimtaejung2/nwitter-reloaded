@@ -57,6 +57,8 @@ const EditBtn = styled.button`
 
 export default function Tweet({ username, tweet, photo, uid, id }: ITweet) {
   const user = auth.currentUser;
+
+  // onDelete: deleteDoc라는 함수에 ref를 넘겨서 해당 트윗을 db storage에서 삭제
   const onDelete = async () => {
     const ok = confirm("Are you sure you want to delete this tweet?");
     if (user?.uid !== uid || !ok) return;
@@ -71,11 +73,12 @@ export default function Tweet({ username, tweet, photo, uid, id }: ITweet) {
     }
   };
 
+  // onEdit: 유저 검증 후, edit tweet을 받아서 updateDoc 함수에 ref와 edit tweet을 넘겨 db 수정
   const onEdit = async () => {
-    const editTweet = prompt("Edit Tweet: ");
+    const editTweet = prompt("Edit Tweet: ")?.trim();
     if (user?.uid !== uid) return;
-    if (!editTweet) {
-      alert("Write edit tweet");
+    if (!editTweet || editTweet.length > 180) {
+      alert("Write edit tweet under 180");
       return;
     }
     try {

@@ -73,9 +73,13 @@ export default function PostTweetForm() {
   const [isLoading, setLoading] = useState(false);
   const [tweet, setTweet] = useState("");
   const [file, setFile] = useState<File | null>(null);
+
+  // onChange: textarea에 사용자가 입력한 값을 setTweet에 저장
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTweet(e.target.value);
   };
+
+  // onFileChange: input에 사용자가 첨부한 파일을 e.target에 있는 files의 값을 꺼내와서 1mb인지 검증 후 setFile에 저장
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (files && files.length === 1) {
@@ -84,6 +88,8 @@ export default function PostTweetForm() {
       }
     }
   };
+
+  // onSubmit: 유저 일치, 로딩끝, 트윗내용 존재, 길이 180자 이하 => db와 storage에 저장
   const onSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
     const user = auth.currentUser;

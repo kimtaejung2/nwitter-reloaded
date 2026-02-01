@@ -5,7 +5,7 @@ import { auth } from "../firebase";
 export default function ProtectedRoute({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode; // children props에는 모든 종류의 인자가 올 수 있음
 }) {
   const user = auth.currentUser;
   if (user === null) {
